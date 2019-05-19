@@ -10,3 +10,7 @@ RUN apt-get update && apt-get install -y git libpng-dev libfreetype6-dev libjpeg
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 RUN sed -i -e "s/html/html\/public/g" /etc/apache2/sites-enabled/000-default.conf
 RUN a2enmod rewrite
+
+RUN pecl install grpc && pecl install protobuf \
+    && echo "extension=grpc.so" >> $PHP_INI_DIR/php.ini \
+    && echo "extension=protobuf.so" >> $PHP_INI_DIR/php.ini
